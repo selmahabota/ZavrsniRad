@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="C:/Users/tarik/IdeaProjects/ZavrsniProjekat">
+        <classes>
+            <class name="tests.CartTest">
+                <methods>
+                    <include name="cartTest"/>
+                    <include name="cartPayingTest"/>
+                </methods>
+            </class>
+            <class name="tests.CategoryTest">
+                <methods>
+                    <include name="numberOfProductsTest"/>
+                </methods>
+            </class>
+            <class name="tests.ContactTest">
+                <methods>
+                    <include name="contactTest"/>
+                </methods>
+            </class>
+            <class name="tests.LoginTest">
+                <methods>
+                    <include name="getPostTest"/>
+                    <include name="invalidLoginTest"/>
+                    <include name="invalidLoginTestJson"/>
+                    <include name="logOutUserTest"/>
+                </methods>
+            </class>
+            <class name="tests.RegisterTest">
+                <methods>
+                    <include name="registerUserTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
