@@ -23,16 +23,14 @@ public class CartTest extends BaseTest {
 
     @Test(description = "add products to cart")
     public void cartTest() {
-        cartPage.clickOnRandomElementCart();
-        cartPage.clickOnRandomElementCart();
+        cartPage.clickOnElements();
         Assert.assertTrue(cartPage.cartPricesMatches());
     }
 
     @Test(description = "products payment in cart")
     public void cartPayingTest() throws IOException {
 
-        cartPage.clickOnRandomElementCart();
-        cartPage.clickOnRandomElementCart();
+        cartPage.clickOnElements();
         cartPage.productsPayment();
         loginPage.getAndPost();
         loginPage.goToLoginPage()

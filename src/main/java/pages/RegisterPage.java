@@ -10,11 +10,9 @@ import java.time.Duration;
 
 @Getter
 public class RegisterPage extends BasePage {
-    private WebDriverWait wait;
 
     public RegisterPage(WebDriver driver) {
         super(driver);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     private By loginOrRegisterLocator = By.xpath("//a[@href='/login']");

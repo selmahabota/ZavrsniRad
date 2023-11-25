@@ -24,7 +24,7 @@ public class ContactPage extends BasePage {
 
     public void CreateWriteAndAttachTextFile() {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/txtfile/output.txt"));
             writer.write("hello this is first line");
             writer.write("\nthis is second line");
             writer.close();
@@ -36,11 +36,11 @@ public class ContactPage extends BasePage {
         typeIn(email, faker.internet().emailAddress());
         typeIn(subject, "Subject");
         typeIn(message, faker.name().fullName() + " " + faker.address());
-        getElement(chooseFileButton).sendKeys("C:\\Users\\tarik\\IdeaProjects\\ZavrsniProjekat\\output.txt");
+        String absoluteFilePath = System.getProperty("user.dir") + "/src/main/java/txtfile/output.txt";
+        getElement(chooseFileButton).sendKeys(absoluteFilePath);
         clickOnElement(submitButton);
         driver.switchTo().alert().accept();
     }
-
     public boolean isContactFormSuccessfullySubmit() {
         return matchesExpectedText(firstMessage, "Success! Your details have been submitted successfully.")
                 && matchesExpectedText(title, "Get In Touch");

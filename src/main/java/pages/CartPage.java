@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Utils;
 
 import java.time.Duration;
@@ -12,14 +14,16 @@ import java.util.List;
 import java.util.Random;
 
 public class CartPage extends BasePage {
-
-
     public CartPage(WebDriver driver) {
         super(driver);
     }
 
-    By listOfProductsAddToCart = By.xpath("//div[@class='features_items']//div[@class='col-sm-4']//div[@class='single-products']//div[@class='productinfo text-center']/a");
-    By listOfOverlayProductsAddToCart = By.xpath("//div[@class='features_items']//div[@class='col-sm-4']//div[@class='single-products']//div[@class='product-overlay']//a");
+    By addToCartFirstProduct = By.xpath("//div[@class='features_items']//div[@class='productinfo text-center']/a[@data-product-id='1']");
+    By addToCartSecondProduct = By.xpath("//div[@class='features_items']//div[@class='productinfo text-center']/a[@data-product-id='8']");
+    By addToCartOverlayFirstProduct = By.xpath("//div[@class='features_items']//div[@class='col-sm-4']//div[@class='single-products']//div[@class='product-overlay']//a[@data-product-id='1']");
+    By addToCartOverlaySecondProduct = By.xpath("//div[@class='features_items']//div[@class='col-sm-4']//div[@class='single-products']//div[@class='product-overlay']//a[@data-product-id='8']");
+    //By listOfProductsAddToCart = By.xpath("//div[@class='features_items']//div[@class='col-sm-4']//div[@class='single-products']//div[@class='productinfo text-center']/a");
+    //By listOfOverlayProductsAddToCart = By.xpath("//div[@class='features_items']//div[@class='col-sm-4']//div[@class='single-products']//div[@class='product-overlay']//a");
     By successAddToCartButton = By.cssSelector(".btn.btn-success.close-modal.btn-block");
     By cart = By.xpath("//ul//a[@href='/view_cart']");
     By price = By.cssSelector(".cart_price p");
@@ -37,24 +41,40 @@ public class CartPage extends BasePage {
     By firstMessage = By.cssSelector(".title.text-center b");
     By secondMessage = By.cssSelector(".col-sm-9.col-sm-offset-1 p");
 
-    public void clickOnRandomElementCart() {
+    public void clickOnElements() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        for (int i = 0; i < 2; i++) {
+            jsExecutor.executeScript("arguments[0].scrollIntoView(true);", getElement(addToCartFirstProduct));
+            hoverOnWebElement(getElement(addToCartFirstProduct));
+            Utils.waitForSeconds(2);
+            clickOnElement(addToCartOverlayFirstProduct);
+            clickOnElement(successAddToCartButton);
+            jsExecutor.executeScript("arguments[0].scrollIntoView(true);", getElement(addToCartSecondProduct));
+            hoverOnWebElement(getElement(addToCartSecondProduct));
+            Utils.waitForSeconds(2);
+            clickOnElement(addToCartOverlaySecondProduct);
+            clickOnElement(successAddToCartButton);
+        }
+        clickOnElement(cart);
+    }
+
+    /*public void clickOnRandomElementCart() {
         driver.navigate().refresh();
-        List<WebElement> list = getElements(listOfProductsAddToCart);
-        List<WebElement> list2 = getElements(listOfOverlayProductsAddToCart);
+        List<WebElement> listProductsAddToCart = getElements(listOfProductsAddToCart);
+        List<WebElement> listOverlayProductsAddToCart = getElements(listOfOverlayProductsAddToCart);
         Random random = new Random();
         int randomElement = random.nextInt(list.size());
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", list.get(randomElement));
+        js.executeScript("arguments[0].scrollIntoView();", listProductsAddToCart.get(randomElement));
         for (int i = 0; i < 2; i++) {
-            hoverOnWebElement(list.get(randomElement));
+            hoverOnWebElement(listProductsAddToCart.get(randomElement));
             Utils.waitForSeconds(3);
-            list2.get(randomElement).click();
+            listOverlayProductsAddToCart.get(randomElement).click();
             clickOnElement(successAddToCartButton);
         }
-    }
+    }*/
 
     public boolean cartPricesMatches() {
-        clickOnElement(cart);
         List<WebElement> pricesList = getElements(price);
         List<WebElement> quantityList = getElements(quantity);
         List<WebElement> totalList = getElements(total);
@@ -100,6 +120,5 @@ public class CartPage extends BasePage {
         return matchesExpectedText(firstMessage, "Order Placed!")
                 && matchesExpectedText(secondMessage, "Congratulations! Your order has been confirmed!");
     }
-
 
 }

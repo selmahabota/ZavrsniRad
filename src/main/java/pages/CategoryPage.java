@@ -15,12 +15,12 @@ public class CategoryPage extends BasePage {
     By allBrands = By.xpath("//div[@class='brands-name']/ul/li");
     By productsInCategory = By.cssSelector(".features_items .col-sm-4");
 
-    public int numberOfAllProducts() {
+    private int numberOfAllProducts() {
         List<WebElement> listOfAllProducts = getElements(allProducts);
         return listOfAllProducts.size();
     }
 
-    public int numberOfCategoryProducts() {
+    private int numberOfCategoryProducts() {
         clickOnRandomElement(allBrands);
         return getElements(productsInCategory).size();
     }
